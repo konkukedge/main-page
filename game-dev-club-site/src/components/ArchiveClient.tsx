@@ -19,9 +19,22 @@ const ArchiveClient = ({ games, error }: ArchiveClientProps) => {
     const eventSet = new Set(games.map(g => g.event));
     // 이벤트 목록을 정렬 (예: "1회 경진대회", "2회 경진대회" 순)
     const sortedEvents = Array.from(eventSet).sort((a, b) => {
-      const numA = parseInt(a.match(/\d+/)?.[0] || '0');
-      const numB = parseInt(b.match(/\d+/)?.[0] || '0');
-      return numA - numB;
+      const matchA = a.match(/(\d{4})년 (\d)학기/);
+      const matchB = b.match(/(\d{4})년 (\d)학기/);
+
+      if (matchA && matchB) {
+        const yearA = parseInt(matchA[1], 10);
+        const semesterA = parseInt(matchA[2], 10);
+        const yearB = parseInt(matchB[1], 10);
+        const semesterB = parseInt(matchB[2], 10);
+
+        if (yearA !== yearB) {
+          return yearA - yearB;
+        }
+        return semesterA - semesterB;
+      }
+      
+      return a.localeCompare(b);
     });
     return sortedEvents;
   }, [games]);
