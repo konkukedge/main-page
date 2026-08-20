@@ -1,2 +1,6 @@
-"service-account.json"
 node_modules/
+.next/
+out/
+.vercel
+.env*.local
+service-account.json
