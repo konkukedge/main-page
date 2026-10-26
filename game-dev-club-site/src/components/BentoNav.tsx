@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Gamepad2, Users } from "lucide-react"; // GalleryHorizontal 제거
+import { Gamepad2, Radar, Users } from "lucide-react"; // GalleryHorizontal 제거
 
 const navItems = [
   {
@@ -19,12 +19,20 @@ const navItems = [
     colSpan: "col-span-1",
     rowSpan: "row-span-1",
   },
+  {
+    href: "/radar",
+    label: "Game Radar",
+    icon: <Radar size={48} />,
+    // 모바일(2열)에서는 한 줄을 다 쓰고, sm 이상 3열에서는 한 칸
+    colSpan: "col-span-2 sm:col-span-1",
+    rowSpan: "row-span-1",
+  },
 ];
 
 const BentoNav = () => {
   return (
     <motion.div
-      className="grid grid-cols-2 gap-4 w-full max-w-4xl mx-auto justify-center" // justify-center 추가 및 md:grid-cols-3 제거
+      className="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full max-w-4xl mx-auto justify-center" // justify-center 추가
       initial="hidden"
       animate="visible"
       variants={{
@@ -36,9 +44,10 @@ const BentoNav = () => {
       }}
     >
       {navItems.map((item) => (
-        <Link href={item.href} key={item.href}>
+        // col-span 은 그리드의 직계 자식(Link)에 있어야 적용된다
+        <Link href={item.href} key={item.href} className={`${item.colSpan} ${item.rowSpan}`}>
           <motion.div
-            className={`${item.colSpan} ${item.rowSpan} h-full`}
+            className="h-full"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 },
