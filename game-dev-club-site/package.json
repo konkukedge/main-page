@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cheerio": "^1.0.0",
     "framer-motion": "^11.2.10",
     "googleapis": "^171.0.0",
     "lucide-react": "^0.379.0",
